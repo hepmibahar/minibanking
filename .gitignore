@@ -31,3 +31,12 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# gitignore rules common for Maven and IntelliJ IDEA
+target/
+.idea/
+*.iml
+*.log
+
+# Docker files
+docker-compose.override.yml
