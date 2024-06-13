@@ -55,3 +55,8 @@ CREATE INDEX idx_user_email ON banking.user(email);
 CREATE INDEX idx_account_user_id ON banking.account(user_id);
 CREATE INDEX idx_transaction_from_account ON banking.transaction(from_account);
 CREATE INDEX idx_transaction_to_account ON banking.transaction(to_account);
+
+-- Unique constraint
+ALTER TABLE banking.user ADD CONSTRAINT unique_username UNIQUE (username);
+ALTER TABLE banking.account ADD CONSTRAINT unique_account_number UNIQUE (account_number);
+
