@@ -19,7 +19,7 @@ import org.hibernate.validator.constraints.Length;
 
 @Data
 @Entity
-@Table(name = "user", uniqueConstraints = @UniqueConstraint(columnNames = "username"))
+@Table(schema = "banking", name = "user", uniqueConstraints = @UniqueConstraint(columnNames = "username"))
 public class User {
 
   @Id
