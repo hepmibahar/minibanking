@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.tr.minibanking.MessageEnum;
+import com.tr.minibanking.enums.Message;
 import com.tr.minibanking.entity.User;
 import com.tr.minibanking.repository.UserRepository;
 
@@ -22,16 +22,16 @@ public class UserService {
 
   public String save(User user) {
     if (isUsernameTaken(user.getUsername())) {
-      return MessageEnum.USER_ALREADY.getMesaj();
+      return Message.USER_ALREADY.getMesaj();
     }
     if (isEmailTaken(user.getEmail())) {
-      return MessageEnum.USER_EMAIL_ALREADY.getMesaj();
+      return Message.USER_EMAIL_ALREADY.getMesaj();
     }
 
     prepareUserForSaving(user);
     userRepository.save(user);
 
-    return MessageEnum.TRANSACTION_SUCCESSFUL.getMesaj();
+    return Message.TRANSACTION_SUCCESSFUL.getMesaj();
   }
 
   private boolean isUsernameTaken(String username) {
