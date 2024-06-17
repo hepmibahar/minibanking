@@ -14,7 +14,7 @@ CREATE TABLE banking.user (
                               password VARCHAR(64) NOT NULL,
                               email VARCHAR(255) NOT NULL UNIQUE,
                               created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                              updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+                              updated_at TIMESTAMP
 );
 
 -- Account Model
@@ -25,7 +25,7 @@ CREATE TABLE banking.account (
                                  account_name VARCHAR(100) NOT NULL UNIQUE,  -- Adjusted length for account name
                                  balance NUMERIC(15, 2) NOT NULL DEFAULT 0,
                                  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                                 updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                                 updated_at TIMESTAMP,
                                  CONSTRAINT fk_user
                                      FOREIGN KEY(user_id)
                                          REFERENCES banking.user(id)
