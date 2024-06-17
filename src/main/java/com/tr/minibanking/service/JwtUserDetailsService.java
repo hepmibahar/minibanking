@@ -1,6 +1,6 @@
 package com.tr.minibanking.service;
 
-import com.tr.minibanking.MessageEnum;
+import com.tr.minibanking.enums.Message;
 import com.tr.minibanking.entity.User;
 import com.tr.minibanking.model.JwtRequest;
 import com.tr.minibanking.model.JwtResponse;
@@ -52,7 +52,7 @@ public class JwtUserDetailsService implements UserDetailsService {
     try {
       authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
     } catch (BadCredentialsException e) {
-      throw new Exception(MessageEnum.INCORRECT_USER_PASSWORD.getMesaj(), e);
+      throw new Exception(Message.INCORRECT_USER_PASSWORD.getMessage(), e);
     } catch (Exception e) {
       throw new Exception(e.getMessage());
     }

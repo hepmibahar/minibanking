@@ -20,18 +20,18 @@ public class UserService {
   @Autowired
   private PasswordEncoder passwordEncoder;
 
-  public String save(User user) {
+  public Message save(User user) {
     if (isUsernameTaken(user.getUsername())) {
-      return Message.USER_ALREADY.getMesaj();
+      return Message.USER_ALREADY;
     }
     if (isEmailTaken(user.getEmail())) {
-      return Message.USER_EMAIL_ALREADY.getMesaj();
+      return Message.USER_EMAIL_ALREADY;
     }
 
     prepareUserForSaving(user);
     userRepository.save(user);
 
-    return Message.TRANSACTION_SUCCESSFUL.getMesaj();
+    return Message.TRANSACTION_SUCCESSFUL;
   }
 
   private boolean isUsernameTaken(String username) {
@@ -44,7 +44,6 @@ public class UserService {
 
   private void prepareUserForSaving(User user) {
     user.setId(UUID.randomUUID());
-    user.setCreatedAt(LocalDateTime.now());
     user.setPassword(passwordEncoder.encode(user.getPassword()));
   }
 }
