@@ -1,19 +1,22 @@
 package com.tr.minibanking.controller;
 
-import com.tr.minibanking.security.JwtTokenUtil;
-import com.tr.minibanking.service.JwtUserDetailsService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.tr.minibanking.MessageEnum;
 import com.tr.minibanking.entity.User;
 import com.tr.minibanking.model.JwtRequest;
 import com.tr.minibanking.model.JwtResponse;
+import com.tr.minibanking.security.JwtTokenUtil;
+import com.tr.minibanking.service.JwtUserDetailsService;
 import com.tr.minibanking.service.UserService;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin
@@ -32,22 +35,22 @@ public class UserController {
   @Autowired
   private UserService userService;
 
+  @Autowired
+  private JwtUserDetailsService jwtUserDetailsService;
+
   @PostMapping("/login")
-  public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
-    try {
-      authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()));
-    } catch (BadCredentialsException e) {
-      throw new Exception("Incorrect username or password", e);
-    }catch (Exception e){
-      throw new Exception(e.getMessage());
-    }
-    final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
-    final String token = jwtTokenUtil.generateToken(userDetails);
-    return ResponseEntity.ok(new JwtResponse(token));
+  public ResponseEntity<JwtResponse> authenticateUser(@RequestBody JwtRequest authenticationRequest) throws Exception {
+    JwtResponse jwtResponse = jwtUserDetailsService.authenticateUser(authenticationRequest);
+    return ResponseEntity.status(HttpStatus.CREATED).body(jwtResponse);
   }
 
   @PostMapping("/register")
-  public ResponseEntity<?> saveUser(@RequestBody User user) throws Exception {
-    return ResponseEntity.ok(userService.save(user));
+  public ResponseEntity<String> registerUser(@RequestBody User user) {
+    String responseMessage = userService.save(user);
+    if (responseMessage.equals(MessageEnum.TRANSACTION_SUCCESSFUL.getMesaj())) {
+      return ResponseEntity.status(HttpStatus.CREATED).body(responseMessage);
+    } else {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseMessage);
+    }
   }
 }

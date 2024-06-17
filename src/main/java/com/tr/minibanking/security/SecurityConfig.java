@@ -1,8 +1,11 @@
 package com.tr.minibanking.security;
 
+import lombok.AllArgsConstructor;
+
 import com.tr.minibanking.service.JwtUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,15 +18,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
+@AllArgsConstructor
 public class SecurityConfig {
 
   private final JwtRequestFilter jwtRequestFilter;
   private final JwtUserDetailsService jwtUserDetailsService;
-
-  public SecurityConfig(JwtRequestFilter jwtRequestFilter, JwtUserDetailsService jwtUserDetailsService) {
-    this.jwtRequestFilter = jwtRequestFilter;
-    this.jwtUserDetailsService = jwtUserDetailsService;
-  }
 
   @Bean
   public PasswordEncoder passwordEncoder() {
