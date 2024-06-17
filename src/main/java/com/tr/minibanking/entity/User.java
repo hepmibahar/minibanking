@@ -10,17 +10,14 @@ import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.Email;
 import lombok.Data;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.validator.constraints.Length;
 
 @Data
 @Entity
 @Table(schema = "banking", name = "user", uniqueConstraints = @UniqueConstraint(columnNames = "username"))
-public class User {
+public class User extends BaseEntity {
 
   @Id
   @Column(name = "id")
@@ -40,11 +37,4 @@ public class User {
   @Length(max = 255)
   private String email;
 
-  @CreationTimestamp
-  @Column(name = "created_at",updatable = false)
-  private LocalDateTime createdAt;
-
-  @UpdateTimestamp
-  @Column(name = "updated_at", insertable = false)
-  private LocalDateTime updatedAt;
 }
