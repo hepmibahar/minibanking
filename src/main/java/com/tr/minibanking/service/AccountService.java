@@ -9,6 +9,7 @@ import com.tr.minibanking.security.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,6 +27,7 @@ public class AccountService {
 
   public Account createAccount(Account account) throws Exception {
     account.setId(UUID.randomUUID());
+    account.setBalance(BigDecimal.valueOf(0));
     account.setAccountNumber(generateUniqueIban());
     account.setUser(jwtTokenUtil.getAuthenticatedUser());
     return accountRepository.save(account);
