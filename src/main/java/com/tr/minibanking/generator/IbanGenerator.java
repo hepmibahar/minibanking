@@ -4,6 +4,9 @@ import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.Locale;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class IbanGenerator {
 
   private static final SecureRandom RANDOM = new SecureRandom();

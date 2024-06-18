@@ -1,5 +1,6 @@
 package com.tr.minibanking.controller;
 
+import org.springframework.context.annotation.Lazy;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +23,7 @@ import java.util.UUID;
 @RequestMapping("/api/accounts")
 public class AccountController {
 
+  @Lazy
   @Autowired
   private AccountService accountService;
 
