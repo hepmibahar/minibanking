@@ -19,6 +19,7 @@ public enum Message {
   public static final String EMAIL_MANDATORY = "Email is mandatory";
   public static final String EMAIL_INVALID = "Email should be valid";
   public static final String TRANSACTION_FAILED="Transaction failed";
+  public static final String AUTH_FAILED="Authentication failed";
 
   private final String message;
 

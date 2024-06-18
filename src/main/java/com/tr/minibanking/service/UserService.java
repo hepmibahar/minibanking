@@ -1,6 +1,7 @@
 package com.tr.minibanking.service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,5 +46,9 @@ public class UserService {
   private void prepareUserForSaving(User user) {
     user.setId(UUID.randomUUID());
     user.setPassword(passwordEncoder.encode(user.getPassword()));
+  }
+
+  public User findByUsername(String username) {
+    return userRepository.findByUsername(username);
   }
 }

@@ -2,7 +2,10 @@ package com.tr.minibanking.service;
 
 import com.tr.minibanking.entity.Account;
 import com.tr.minibanking.enums.Message;
+import com.tr.minibanking.generator.IbanGenerator;
 import com.tr.minibanking.repository.AccountRepository;
+import com.tr.minibanking.security.JwtTokenUtil;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,8 +18,26 @@ public class AccountService {
   @Autowired
   private AccountRepository accountRepository;
 
+  @Autowired
+  private IbanGenerator ibanGenerator;
+
+  @Autowired
+  private JwtTokenUtil jwtTokenUtil;
+
   public Account createAccount(Account account) throws Exception {
+    account.setId(UUID.randomUUID());
+    account.setAccountNumber(generateUniqueIban());
+    account.setUser(jwtTokenUtil.getAuthenticatedUser());
     return accountRepository.save(account);
+  }
+
+  private String generateUniqueIban() throws Exception {
+    String iban;
+    do {
+      iban = IbanGenerator.generateIban();
+    }
+    while (accountRepository.findByAccountNumber(iban).isEmpty());
+    return iban;
   }
 
   public List<Account> searchAccounts(String accountNumber, String accountName) {
