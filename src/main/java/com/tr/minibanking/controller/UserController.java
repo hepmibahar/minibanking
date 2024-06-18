@@ -31,7 +31,7 @@ public class UserController {
   private UserService userService;
 
   @PostMapping("/login")
-  public ResponseEntity<ApiResponse<JwtResponse>> authenticateUser(@RequestBody JwtRequest authenticationRequest) {
+  public ResponseEntity<ApiResponse<JwtResponse>> authenticateUser(@Valid @RequestBody JwtRequest authenticationRequest) {
     try {
       JwtResponse jwtResponse = jwtUserDetailsService.authenticateUser(authenticationRequest);
       return buildResponse(HttpStatus.OK, Message.LOGIN_SUCCESSFUL, jwtResponse);

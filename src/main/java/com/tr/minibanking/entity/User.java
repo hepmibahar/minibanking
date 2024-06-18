@@ -36,7 +36,7 @@ public class User extends BaseEntity {
 
   @Column(name="password")
   @NotBlank(message = Message.PASSWORD_MANDATORY)
-  @Size(min = 3, max = 50, message = Message.PASSWORD_SIZE)
+  @Size(min = 6, max = 64, message = Message.PASSWORD_SIZE)
   @Length(max = 64)
   private String password;
 

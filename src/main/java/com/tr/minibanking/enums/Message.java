@@ -14,7 +14,7 @@ public enum Message {
   public static final String USERNAME_MANDATORY = "Username is mandatory";
   public static final String USERNAME_SIZE = "Username must be between 3 and 50 characters";
   public static final String PASSWORD_MANDATORY = "Password is mandatory";
-  public static final String PASSWORD_SIZE = "Password must be at least 6 characters";
+  public static final String PASSWORD_SIZE = "Password must be at between 6 and 64 characters";
   public static final String EMAIL_SIZE = "Username must be between 10 and 255 characters";
   public static final String EMAIL_MANDATORY = "Email is mandatory";
   public static final String EMAIL_INVALID = "Email should be valid";
