@@ -10,10 +10,13 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.math.BigDecimal;
 import java.util.UUID;
+
+import com.tr.minibanking.enums.Message;
 
 @Data
 @Entity
@@ -32,6 +35,7 @@ public class Account extends BaseEntity{
   @Column(name = "account_number", unique = true)
   private String accountNumber;
 
+  @NotNull(message = Message.ACCOUNT_NAME_NOTNULL)
   @Column(name = "account_name")
   private String accountName;
 
