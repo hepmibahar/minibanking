@@ -9,7 +9,8 @@ public enum Message {
   REGISTRATION_FAILED("User registration failed"),
   INTERNAL_ERROR("Internal server error"),
   VALIDATION_FAILED("Validation failed"),
-  UNKNOWN_ENUM_VALUE("Unknown enum value");
+  UNKNOWN_ENUM_VALUE("Unknown enum value"),
+  ACCOUNT_ALREADY_USER("Account with this name already exists for the user");
 
   public static final String USERNAME_MANDATORY = "Username is mandatory";
   public static final String USERNAME_SIZE = "Username must be between 3 and 50 characters";

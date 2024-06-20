@@ -5,6 +5,13 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 
+import javax.crypto.SecretKey;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Function;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
@@ -13,21 +20,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Function;
-
 import com.tr.minibanking.entity.User;
 import com.tr.minibanking.enums.Message;
-import com.tr.minibanking.repository.UserRepository;
 import com.tr.minibanking.service.UserService;
 
 @Component
 public class JwtTokenUtil {
 
-  @Value("${jwt.secret}")
-  private String secret;
+  private static final SecretKey secret = Keys.secretKeyFor(SignatureAlgorithm.HS512);
 
   @Value("${jwt.expiration}")
   private Long expiration;
@@ -50,8 +50,13 @@ public class JwtTokenUtil {
   }
 
   private Claims getAllClaimsFromToken(String token) {
-    return Jwts.parserBuilder().setSigningKey(secret).build().parseClaimsJws(token).getBody();
+    return Jwts.parserBuilder()
+        .setSigningKey(secret)
+        .build()
+        .parseClaimsJws(token)
+        .getBody();
   }
+
 
   private Boolean isTokenExpired(String token) {
     final Date expiration = getExpirationDateFromToken(token);
@@ -73,7 +78,7 @@ public class JwtTokenUtil {
         .setIssuedAt(new Date())
         .setExpiration(expiryDate)
         .addClaims(claims)
-        .signWith(Keys.secretKeyFor(SignatureAlgorithm.HS512))
+        .signWith(secret)
         .compact();
   }
 
@@ -95,7 +100,6 @@ public class JwtTokenUtil {
       username = authentication.getPrincipal().toString();
     }
 
-    UserRepository userRepository;
     return userService.findByUsername(username);
   }
 }

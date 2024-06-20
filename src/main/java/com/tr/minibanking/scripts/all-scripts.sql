@@ -21,7 +21,7 @@ CREATE TABLE banking.user (
 CREATE TABLE banking.account (
                                  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
                                  user_id UUID NOT NULL,
-                                 account_number VARCHAR(20) NOT NULL UNIQUE,
+                                 account_number VARCHAR(30) NOT NULL UNIQUE,
                                  account_name VARCHAR(100) NOT NULL UNIQUE,  -- Adjusted length for account name
                                  balance NUMERIC(15, 2) NOT NULL DEFAULT 0,
                                  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,

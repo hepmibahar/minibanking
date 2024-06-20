@@ -1,17 +1,17 @@
 package com.tr.minibanking.service;
 
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.UUID;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.tr.minibanking.entity.Account;
 import com.tr.minibanking.enums.Message;
 import com.tr.minibanking.generator.IbanGenerator;
 import com.tr.minibanking.repository.AccountRepository;
 import com.tr.minibanking.security.JwtTokenUtil;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.math.BigDecimal;
-import java.util.List;
-import java.util.UUID;
 
 @Service
 public class AccountService {
@@ -38,7 +38,7 @@ public class AccountService {
     do {
       iban = IbanGenerator.generateIban();
     }
-    while (accountRepository.findByAccountNumber(iban).isEmpty());
+    while (!accountRepository.findByAccountNumber(iban).isEmpty());
     return iban;
   }
 
