@@ -41,7 +41,7 @@ CREATE TABLE banking.transaction (
                                      to_account UUID NOT NULL,
                                      amount NUMERIC(15, 2) NOT NULL,
                                      transaction_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                                     status transaction_status NOT NULL,  -- Use ENUM type for status
+                                     status int4 NOT NULL,  -- Use ENUM type for status
                                      CONSTRAINT fk_from_account
                                          FOREIGN KEY(from_account)
                                              REFERENCES banking.account(id),
