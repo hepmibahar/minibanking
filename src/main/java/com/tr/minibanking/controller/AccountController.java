@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tr.minibanking.entity.Account;
+import com.tr.minibanking.dto.AccountDto;
 import com.tr.minibanking.enums.Message;
 import com.tr.minibanking.model.ApiResponse;
 import com.tr.minibanking.service.AccountService;
@@ -35,9 +35,9 @@ public class AccountController {
   private AccountService accountService;
 
   @PostMapping
-  public ResponseEntity<ApiResponse<Account>> createAccount(@Valid @RequestBody Account account) {
+  public ResponseEntity<ApiResponse<AccountDto>> createAccount(@Valid @RequestBody AccountDto accountDTO) {
     try {
-      Account createdAccount = accountService.createAccount(account);
+      AccountDto createdAccount = accountService.createAccount(accountDTO);
       return buildResponse(HttpStatus.CREATED, Message.TRANSACTION_SUCCESSFUL, createdAccount);
     } catch (Exception e) {
       return buildResponse(HttpStatus.INTERNAL_SERVER_ERROR, Message.INTERNAL_ERROR, null);
@@ -45,9 +45,11 @@ public class AccountController {
   }
 
   @GetMapping
-  public ResponseEntity<ApiResponse<List<Account>>> searchAccounts(@RequestParam(required = false) String accountNumber, @RequestParam(required = false) String accountName) {
+  public ResponseEntity<ApiResponse<List<AccountDto>>> searchAccounts(
+      @RequestParam(required = false) String accountNumber,
+      @RequestParam(required = false) String accountName) {
     try {
-      List<Account> accounts = accountService.searchAccounts(accountNumber, accountName);
+      List<AccountDto> accounts = accountService.searchAccounts(accountNumber, accountName);
       return buildResponse(HttpStatus.OK, Message.TRANSACTION_SUCCESSFUL, accounts);
     } catch (Exception e) {
       return buildResponse(HttpStatus.INTERNAL_SERVER_ERROR, Message.INTERNAL_ERROR, null);
@@ -55,9 +57,11 @@ public class AccountController {
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<ApiResponse<Account>> updateAccount(@PathVariable UUID id, @Valid @RequestBody Account account) {
+  public ResponseEntity<ApiResponse<AccountDto>> updateAccount(
+      @PathVariable UUID id,
+      @Valid @RequestBody AccountDto accountDTO) {
     try {
-      Account updatedAccount = accountService.updateAccount(id, account);
+      AccountDto updatedAccount = accountService.updateAccount(id, accountDTO);
       return buildResponse(HttpStatus.OK, Message.TRANSACTION_SUCCESSFUL, updatedAccount);
     } catch (Exception e) {
       return buildResponse(HttpStatus.INTERNAL_SERVER_ERROR, Message.INTERNAL_ERROR, null);
@@ -75,9 +79,9 @@ public class AccountController {
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<ApiResponse<Account>> getAccountDetails(@PathVariable UUID id) {
+  public ResponseEntity<ApiResponse<AccountDto>> getAccountDetails(@PathVariable UUID id) {
     try {
-      Account account = accountService.getAccountDetails(id);
+      AccountDto account = accountService.getAccountDetails(id);
       return buildResponse(HttpStatus.OK, Message.TRANSACTION_SUCCESSFUL, account);
     } catch (Exception e) {
       return buildResponse(HttpStatus.INTERNAL_SERVER_ERROR, Message.INTERNAL_ERROR, null);

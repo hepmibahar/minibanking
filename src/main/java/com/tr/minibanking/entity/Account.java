@@ -35,7 +35,6 @@ public class Account extends BaseEntity{
   @Column(name = "account_number", unique = true)
   private String accountNumber;
 
-  @NotNull(message = Message.ACCOUNT_NAME_NOTNULL)
   @Column(name = "account_name")
   private String accountName;
 
