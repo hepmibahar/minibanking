@@ -8,15 +8,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 import java.util.UUID;
 
 import org.hibernate.validator.constraints.Length;
-
-import com.tr.minibanking.enums.Message;
 
 @Data
 @Entity

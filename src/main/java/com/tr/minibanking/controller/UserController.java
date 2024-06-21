@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tr.minibanking.dto.UserDto;
 import com.tr.minibanking.entity.User;
 import com.tr.minibanking.enums.Message;
 import com.tr.minibanking.model.ApiResponse;
@@ -48,11 +49,11 @@ public class UserController {
   }
 
   @PostMapping("/register")
-  public ResponseEntity<ApiResponse<String>> registerUser(@RequestBody @Valid User user) {
+  public ResponseEntity<ApiResponse<String>> registerUser(@RequestBody @Valid UserDto user) {
     try {
       Message responseMessage = userService.save(user);
       if (responseMessage.equals(Message.TRANSACTION_SUCCESSFUL.getMessage())) {
-        return buildResponse(HttpStatus.CREATED, responseMessage, user.getId().toString());
+        return buildResponse(HttpStatus.CREATED, responseMessage, user.toString());
       } else {
         return buildResponse(HttpStatus.BAD_REQUEST, responseMessage, null);
       }
