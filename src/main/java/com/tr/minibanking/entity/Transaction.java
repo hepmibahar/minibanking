@@ -6,13 +6,16 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import com.tr.minibanking.enums.TransactionStatus;
+
 @Data
 @Entity
 @Table(schema = "banking", name = "transaction")
-public class Transaction extends BaseEntity {
+public class Transaction {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "id", updatable = false, nullable = false)
   private Long id;
 
   @ManyToOne(fetch = FetchType.LAZY)
@@ -27,8 +30,13 @@ public class Transaction extends BaseEntity {
   private BigDecimal amount;
 
   @Column(name = "transaction_date", nullable = false)
-  private LocalDateTime transactionDate = LocalDateTime.now();
+  private LocalDateTime transactionDate;
 
-  @Column(name = "status")
-  private String status;
+  @Column(name = "status", nullable = false)
+  private int status;
+
+  @PrePersist
+  protected void onCreate() {
+    transactionDate = LocalDateTime.now();
+  }
 }
