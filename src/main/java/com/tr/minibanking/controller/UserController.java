@@ -2,19 +2,24 @@ package com.tr.minibanking.controller;
 
 import jakarta.validation.Valid;
 
-import com.tr.minibanking.enums.Message;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.tr.minibanking.entity.User;
+import com.tr.minibanking.enums.Message;
 import com.tr.minibanking.model.ApiResponse;
 import com.tr.minibanking.model.JwtRequest;
 import com.tr.minibanking.model.JwtResponse;
 import com.tr.minibanking.security.JwtTokenUtil;
 import com.tr.minibanking.service.JwtUserDetailsService;
 import com.tr.minibanking.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin

@@ -1,7 +1,8 @@
 package com.tr.minibanking.model;
 
-import com.tr.minibanking.enums.Message;
 import org.springframework.http.HttpStatus;
+
+import com.tr.minibanking.enums.Message;
 
 public class ApiResponse<T> {
   private HttpStatus status;
